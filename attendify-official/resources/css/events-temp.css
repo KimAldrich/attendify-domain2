@@ -1,0 +1,20 @@
+/* No @tailwind base/components here so we don't duplicate globals */
+@tailwind utilities;
+
+/* Scope everything under .events-scope so it never leaks */
+@layer utilities {
+  .events-scope .text-brand      { color: #006dff; }
+  .events-scope .text-brandDark  { color: #001f99; }
+
+  .events-scope .bg-brand        { background-color: #006dff; }
+  .events-scope .bg-brandDark    { background-color: #001f99; }
+
+  .events-scope .border-brand    { border-color: #006dff; }
+
+  /* Tailwind ring uses a CSS var; set it for ring-* utilities */
+  .events-scope .ring-brand      { --tw-ring-color: #006dff; }
+
+  /* Custom shadows to match their config */
+  .events-scope .shadow-card         { box-shadow: 0 8px 24px rgba(0,31,153,.12); }
+  .events-scope .hover\:shadow-cardHover:hover { box-shadow: 0 16px 44px rgba(0,31,153,.18); }
+}

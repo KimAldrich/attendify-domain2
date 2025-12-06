@@ -1,0 +1,319 @@
+/* Hide anything with x-cloak until Alpine is ready */
+[x-cloak] { display: none !important; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-image: url('/images/background-auth.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px;                /* 40px 20px -> 32px 16px */
+  min-height: 100vh;
+  overflow: auto;
+}
+
+.container {
+  width: min(100%, 840px);           /* 1050px -> 840px */
+  display: flex;
+  border-radius: 12px;               /* 15px -> 12px */
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1); /* 0 10px 30px -> 0 8px 24px */
+  background: #fff;
+  margin: 0 auto;
+  flex-direction: row-reverse;
+}
+
+.container { margin-top: 10px; }     /* 12px -> 9.6px */
+@media (min-height: 820px) {
+  .container { margin-top: 19px; }   /* 24px -> 19.2px */
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 64px;                /* 60px 80px -> 48px 64px */
+  background: #fff;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 1.6rem;             /* 2rem -> 1.6rem */
+}
+
+.form-header h3 {
+  color: #001f99;
+  font-size: 1.76rem;                /* 2.2rem -> 1.76rem */
+  font-weight: 700;
+  margin-bottom: 1.6px;              /* 2px -> 1.6px */
+}
+
+.form-header p {
+  color: #666;
+  font-size: 0.76rem;                /* 0.95rem -> 0.76rem */
+}
+
+.form-group {
+  margin-bottom: 14.4px;             /* 18px -> 14.4px */
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;                         /* 15px -> 12px */
+  margin-bottom: 14.4px;             /* 18px -> 14.4px */
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+input {
+  width: 100%;
+  padding: 11.2px;                   /* 14px -> 11.2px */
+  border-radius: 6.4px;              /* 8px -> 6.4px */
+  border: 1px solid #ddd;            /* keep 1px */
+  font-size: 11.2px;                 /* 14px -> 11.2px */
+}
+
+input:focus {
+  outline: none;
+  border-color: #006dff;
+}
+
+label.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4.8px;                        /* 6px -> 4.8px */
+  font-size: 11.2px;                 /* 14px -> 11.2px */
+  color: #333;
+  white-space: nowrap;
+}
+
+.terms {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;               /* 20px -> 16px */
+}
+
+.btn {
+  width: 100%;
+  padding: 9.6px;                    /* 12px -> 9.6px */
+  border: none;
+  border-radius: 24px;               /* 30px -> 24px */
+  background: #006dff;
+  color: #fff;
+  font-size: 12.8px;                 /* 16px -> 12.8px */
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #0056cc;
+}
+
+.login-link {
+  text-align: center;
+  font-size: 11.2px;                 /* 14px -> 11.2px */
+  margin-top: 16px;                  /* 20px -> 16px */
+}
+
+.login-link a {
+  color: #006dff;
+  text-decoration: none;
+}
+
+.terms-link a {
+  color: #006dff;
+  text-decoration: none;
+}
+
+.right {
+  flex: 1;
+  background: linear-gradient(135deg, #001f99 0%, #0033cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  padding: 2.4rem;                   /* 3rem -> 2.4rem */
+  position: relative;
+}
+
+.logo-placeholder {
+  width: 96px;                       /* 120px -> 96px */
+  height: 96px;                      /* 120px -> 96px */
+  border: 2.4px solid rgba(255, 255, 255, 0.3); /* 3px -> 2.4px */
+  border-radius: 50%;
+      background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.6rem;             /* 2rem -> 1.6rem */
+  animation: pulse 2s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.logo-image {
+  width: 96px;                       /* 120px -> 96px */
+  height: 96px;                      /* 120px -> 96px */
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+  }
+}
+
+.logo-text {
+  text-align: center;
+}
+
+.logo-text h2 {
+  font-size: 1.44rem;                /* 1.8rem -> 1.44rem */
+  font-weight: 700;
+  margin-bottom: 0.4rem;             /* 0.5rem -> 0.4rem */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logo-text p {
+  font-size: 0.76rem;                /* 0.95rem -> 0.76rem */
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .right {
+    display: none;
+  }
+  .left {
+    padding: 32px 24px;              /* 40px 30px -> 32px 24px */
+  }
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+/* --- T&C modal --- */
+.tac-overlay{
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0,0,0,.5);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+
+.tac-card{
+  background:#fff; width:min(880px, 92vw);
+  max-height: 88vh; border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  display:flex; flex-direction:column;
+}
+
+.tac-header{
+  padding:16px 20px; border-bottom:1px solid #eee;
+}
+.tac-header h4{
+  margin:0; font-size:18px; font-weight:700;
+}
+
+.tac-content{
+  padding:16px 20px;
+  overflow:auto;           /* scrolling area */
+  max-height: 60vh;        /* ensure scroll space */
+  -webkit-overflow-scrolling: touch; /* smooth on iOS */
+  line-height:1.5; color:#333;
+}
+
+.tac-actions{
+  padding:12px 20px; border-top:1px solid #eee;
+  display:flex; gap:10px; justify-content:flex-end; align-items:center;
+}
+
+/* Modal buttons — don't reuse .btn (that’s full-width) */
+.tac-btn{
+  width:auto; padding:10px 14px; border-radius:8px;
+  cursor:pointer; font-weight:600; font-size:14px;
+  border:1px solid transparent; transition:opacity .2s ease;
+}
+.tac-btn--ghost{
+  background:#fafafa; border-color:#ddd; color:#111;
+}
+.tac-btn--primary{
+  background:#2563eb; color:#fff; border:none;
+}
+.tac-btn.is-disabled{
+  opacity:.5; cursor:not-allowed;
+}
+
+  /* hide anything with x-cloak until Alpine mounts */
+  [x-cloak]{ display:none !important; }
+
+  /* modal body sizing so it can scroll when needed */
+  .tac-content{
+    max-height: min(70vh, 520px);
+    overflow: auto;
+    padding: 1rem 1.25rem;
+    background: #fff;
+  }
+
+  /* compact the Terms typography when shown inside the modal */
+  .tac-content .tac-compact .tac-body h1 { 
+    font-size: 1.15rem; margin: .5rem 0 .5rem; 
+  }
+  .tac-content .tac-compact .tac-body h2 { 
+    font-size: 1rem; margin: .75rem 0 .5rem; 
+  }
+  .tac-content .tac-compact .tac-body h3 { 
+    font-size: .95rem; margin: .5rem 0 .25rem; 
+  }
+  .tac-content .tac-compact .tac-body p,
+  .tac-content .tac-compact .tac-body li { 
+    font-size: .9rem; line-height: 1.35rem; 
+  }
+  .tac-content .tac-compact .tac-body hr { 
+    margin: .75rem 0; 
+  }
+
+  .auth-form .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    height:48px; width:100%; flex:0 0 auto;
+  }
+
+  .hr-exec {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #c9d3e0, transparent);
+    position: relative;
+  }
+  .hr-exec::before,
+  .hr-exec::after{
+    content:"";
+    position:absolute; left:0; right:0;
+    height:1px;
+    background: linear-gradient(to right, transparent, #e9edf3, transparent);
+  }
+  .hr-exec::before{ top:-6px; }
+  .hr-exec::after { top:6px;  }

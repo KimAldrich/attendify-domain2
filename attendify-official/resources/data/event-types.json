@@ -1,0 +1,97 @@
+[
+{
+"key": "seminar",
+"label": "Seminar",
+"category": "Academic"
+},
+{
+"key": "workshop",
+"label": "Workshop",
+"category": "Academic"
+},
+{
+"key": "orientation",
+"label": "Orientation",
+"category": "Academic"
+},
+{
+"key": "academic_event",
+"label": "Academic Event",
+"category": "Academic"
+},
+{
+"key": "lecture",
+"label": "Lecture",
+"category": "Academic"
+},
+{
+"key": "training",
+"label": "Training",
+"category": "Academic"
+},
+{
+"key": "symposium",
+"label": "Symposium",
+"category": "Academic"
+},
+{
+"key": "conference",
+"label": "Conference",
+"category": "External"
+},
+{
+"key": "panel_discussion",
+"label": "Panel Discussion",
+"category": "External"
+},
+{
+"key": "research_presentation",
+"label": "Research Presentation",
+"category": "Academic"
+},
+{
+"key": "thesis_capstone_defense",
+"label": "Thesis/Capstone Defense",
+"category": "Academic"
+},
+{
+"key": "student_activity",
+"label": "Student Activity",
+"category": "StudentLife"
+},
+{
+"key": "club_org_meeting",
+"label": "Club/Org Meeting",
+"category": "StudentLife"
+},
+{
+"key": "community_outreach",
+"label": "Community Outreach",
+"category": "StudentLife"
+},
+{
+"key": "career_fair",
+"label": "Career Fair",
+"category": "External"
+},
+{
+"key": "ceremony",
+"label": "Ceremony",
+"category": "Special"
+},
+{
+"key": "exhibit_showcase",
+"label": "Exhibit/Showcase",
+"category": "Special"
+},
+{
+"key": "competition",
+"label": "Competition",
+"category": "Special"
+},
+{
+"key": "special_event",
+"label": "Special Event",
+"category": "Special"
+}
+]

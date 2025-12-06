@@ -1,0 +1,543 @@
+/* Attendify Landing Page Styles */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #fff;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+.attendify-header {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2.5rem;
+}
+.logo {
+    font-weight: 700;
+    font-size: 1.7rem;
+    color: #007bff;
+    letter-spacing: 1px;
+}
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+.nav-links a:hover {
+    color: #007bff;
+}
+.nav-cta {
+    display: flex;
+    gap: 1rem;
+}
+.btn {
+    border-radius: 25px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-primary {
+    background: #007bff;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+}
+.btn-primary:hover {
+    background: #0056b3;
+}
+.btn-secondary {
+    background: none;
+    color: #007bff;
+    border: 2px solid #007bff;
+}
+.btn-secondary:hover {
+    background: #f1f6ff;
+}
+.hero-section {
+    background: #fff;
+    position: relative;
+    padding: 3rem 0 1rem 0;
+}
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+    padding: 2rem 2rem 0 2rem;
+}
+.hero-title {
+    color: #007bff;
+    font-size: 2.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+.hero-subtext {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 3.5rem;
+}
+.hero-img {
+    width: 100%;
+    max-width: 800px;
+    min-width: 600px;
+    margin-bottom: -70px;
+}
+
+.hero-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-right: 3rem;
+}
+.standout-img {
+    max-width: 420px;
+    min-width: 280px;
+    margin-right: 0;
+}
+.wave-separator {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 70px;
+    background: url('data:image/svg+xml;utf8,<svg width="100%" height="70" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C480,90 960,0 1440,60 L1440,70 L0,70 Z" fill="%23f1f6ff"/></svg>') no-repeat;
+    background-size: cover;
+}
+.how-it-works-section {
+    background: #f1f6ff;
+    padding: 4rem 0 3rem 0;
+    text-align: center;
+}
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    color: #222;
+}
+.section-subtitle {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+.how-it-works-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+.step {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,123,255,0.04);
+    padding: 2rem 1.2rem;
+    text-align: center;
+    position: relative;
+}
+.icon {
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+.curvy-dashed-line {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 80%;
+    height: 0;
+    border-top: 3px dashed #007bff;
+    border-radius: 50px;
+    z-index: 1;
+}
+.attendance-section {
+    background: #fff;
+    padding: 4rem 0 3rem 0;
+    text-align: center;
+}
+.attendance-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+}
+.attendance-img {
+    position: relative;
+}
+.attendance-photo {
+    width: 100%;
+    max-width: 600px;
+    min-width: 320px;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,123,255,0.12), 0 2px 8px rgba(0,0,0,0.08);
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    background: #fff;
+}
+.facial-recognition-overlay {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    border: 2px solid #007bff;
+    border-radius: 18px;
+    box-shadow: 0 0 12px #007bff44;
+    pointer-events: none;
+}
+.attendance-features {
+    text-align: left;
+}
+.attendance-features ul {
+    list-style: none;
+    padding: 0;
+}
+.feature-icon {
+    color: #007bff;
+    margin-right: 0.7rem;
+    font-size: 1.2rem;
+}
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.feature-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+.feature-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 1.7rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+}
+.feature-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.feature-heading {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 0.3rem;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+.feature-desc {
+    font-size: 0.98rem;
+    color: #555;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 400;
+}
+.testimonials-section {
+    background: #fff;
+    padding: 4rem 0 3rem 0;
+    text-align: center;
+}
+.testimonials-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.testimonial-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,123,255,0.08);
+    padding: 2rem 1.2rem;
+    text-align: left;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.testimonial-profile {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+.testimonial-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.testimonial-text {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 1.2rem;
+}
+.testimonial-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.testimonial-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 1rem;
+}
+.testimonial-name {
+    font-weight: 700;
+    color: #222;
+    font-size: 1.1rem;
+}
+.testimonial-location {
+    font-size: 0.95rem;
+    color: #555;
+}
+.testimonial-event {
+    color: #007bff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.attendify-footer {
+    background: #eaf3ff;
+    padding: 3rem 2rem 1rem 2rem;
+    border-top: 1px solid #eaf3ff;
+}
+.footer-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 1.5rem auto;
+}
+.footer-left .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 0.7rem;
+}
+.vision {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+.social-icons a {
+    color: #007bff;
+    font-size: 1.3rem;
+    margin-right: 1rem;
+    text-decoration: none;
+}
+.footer-center h4, .footer-right h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+    color: #222;
+}
+.footer-center ul, .footer-right ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-center li, .footer-right li {
+    margin-bottom: 0.5rem;
+}
+.footer-center a, .footer-right a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+.footer-socials a {
+    color: #007bff;
+    font-size: 1.2rem;
+    margin-right: 0.7rem;
+    text-decoration: none;
+}
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #555;
+    border-top: 1px solid #eaf3ff;
+    padding-top: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.footer-links a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 1rem;
+}
+/* Campus Events Section Styles */
+.campus-events-section {
+    background: #f1f6ff;
+    padding: 4rem 0 3rem 0;
+    text-align: center;
+}
+.events-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.event-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(0,123,255,0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.event-image-area {
+    position: relative;
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+.event-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: #6f42c1;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 16px;
+    z-index: 2;
+}
+.event-label.free {
+    background: #007bff;
+}
+.event-label.price {
+    background: #6f42c1;
+}
+.event-actions {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2;
+}
+.event-action-btn {
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+.event-action-btn:hover {
+    background: #eaf3ff;
+}
+.event-info-area {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+    gap: 1.2rem;
+}
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 48px;
+}
+.event-month {
+    color: #6f42c1;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.event-day {
+    color: #222;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1;
+}
+.event-details {
+    text-align: left;
+}
+.event-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 0.4rem;
+}
+.event-location {
+    font-size: 0.98rem;
+    color: #888;
+}
+@media (max-width: 900px) {
+    .hero-content, .attendance-content, .testimonials-cards, .footer-main {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .how-it-works-steps {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .events-cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .features-list .feature-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.7rem;
+    }
+}

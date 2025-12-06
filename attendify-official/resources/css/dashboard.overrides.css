@@ -1,0 +1,154 @@
+/* ===========================
+   Dashboard overrides (scoped)
+   =========================== */
+
+:root{
+  --att-blue: var(--c-blue, #0033cc);
+  --att-accent: var(--c-accent, #006dff);
+  --att-ink: #0f172a;
+  --att-muted: #475569;
+  --att-card: #ffffff;
+  --att-soft: #f4f7fb;
+  --att-radius: 14px;
+  --att-shadow: 0 6px 16px rgba(2,6,23,0.06);
+}
+
+/* page wrapper */
+.dash{
+  padding: 1rem clamp(.5rem, 2vw, 1.25rem);
+}
+
+/* two-column layout */
+.dash-grid{
+  display:grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, .9fr);
+  gap: 20px;
+  align-items:start;
+}
+
+/* spacing */
+.dash-main > section{ margin-bottom: 22px; }
+.dash-side > *{ margin-bottom: 20px; }
+
+/* header copy */
+.dashboard-header .greeting{
+  color: var(--att-blue);
+  margin: 0 0 .25rem 0;
+  line-height: 1.2;
+}
+.dashboard-header .subtext{
+  color: var(--att-muted);
+  margin: 0 0 .75rem 0;
+}
+
+/* banner */
+.dashboard-banner .aesthetic-banner{
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--att-blue), var(--att-accent));
+  padding: clamp(16px, 3vw, 24px);
+  color: #fff;
+  box-shadow: var(--att-shadow);
+  position: relative;
+}
+.banner-title{ margin: 0 0 .4rem 0; }
+.banner-desc{ margin: 0 0 1rem 0; color: #eef4ff; }
+.banner-btn-row .cta-btn{
+  background:#fff; color: var(--att-blue);
+  border:0; border-radius: 999px; padding:.55rem 1rem; font-weight:600; cursor:pointer;
+}
+.banner-scanner-btn{
+  background:#fff; color: var(--att-blue);
+  border: 0; border-radius: 10px; padding:.6rem 1rem; font-weight:600; cursor:pointer;
+  position: absolute; right: clamp(10px, 2vw, 18px); bottom: clamp(10px, 2vw, 18px);
+  box-shadow: var(--att-shadow);
+}
+
+/* shared card look */
+.card, .calendar-widget, .classroom-schedule-list,
+.registered-event-card{
+  background: var(--att-card);
+  border-radius: var(--att-radius);
+  box-shadow: var(--att-shadow);
+}
+
+/* right column elements fill width */
+.dashboard-calendar .calendar-widget,
+.dashboard-schedule .classroom-schedule-list{ width: 100%; }
+
+/* registered events grid */
+.registered-events-row{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.registered-event-card{
+  display:flex; align-items:flex-start; gap:12px;
+  padding:12px; text-decoration:none; color:inherit;
+  min-height: 150px;
+}
+.registered-event-thumb{
+  width:96px; height:96px; border-radius:10px; object-fit:cover; flex-shrink:0;
+}
+
+/* progress */
+.progress-bar{ height:6px; border-radius:999px; background:#e6eefc; overflow:hidden; }
+.progress-filled{ height:100%; background: var(--att-accent); }
+
+/* section headings & rules */
+.registered-events-section .registered-events-title,
+.community-events-section .community-header{
+  margin: 0 0 10px 0;
+  color: var(--att-blue);
+  font-weight: 700;
+}
+.registered-events-section,
+.community-events-section{
+  border-top: 1px solid #dbe7ff;
+  padding-top: 12px;
+}
+
+/* community cards */
+.minimalist-events{
+  display:grid; gap:14px;
+  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+}
+.maximized-image-card{
+  display:flex; gap:12px; align-items:center; padding:12px; background: var(--att-card);
+  border-radius: var(--att-radius); box-shadow: var(--att-shadow);
+}
+.maximized-image-col .maximized-thumb{
+  width:110px; height:72px; border-radius:10px; object-fit:cover;
+}
+
+/* calendar controls */
+.calendar-header-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 12px; border-bottom:1px solid #eaf1ff;
+}
+.calendar-month{
+  background: var(--att-blue); color:#fff; font-weight:600;
+  padding:.4rem .9rem; border-radius:8px;
+}
+.calendar-nav{
+  background:#fff; border:1px solid #dce6ff; border-radius:8px; width:36px; height:32px; cursor:pointer;
+}
+
+/* schedule rows */
+.schedule-title{ margin: 0 0 8px 0; color: var(--att-blue); }
+.schedule-item{
+  display:flex; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:10px;
+  background:#f6f9ff; margin-bottom:8px;
+}
+.schedule-time{
+  background: var(--att-blue); color:#fff; border-radius:8px; padding:.35rem .6rem; font-weight:700;
+}
+
+/* responsive */
+@media (max-width: 1100px){
+  .dash-grid{ grid-template-columns: 1fr; }
+  .dash-side{ order:-1; } /* move calendar/schedule above main on tablets; remove if not desired */
+}
+@media (max-width: 640px){
+  .registered-event-thumb{ width:84px; height:84px; }
+  .banner-scanner-btn{ position:static; margin-top:.75rem; }
+}
