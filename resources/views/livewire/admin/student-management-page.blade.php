@@ -1,7 +1,6 @@
 {{-- resources/views/livewire/admin/student-management-page.blade.php --}}
 <div>
     <div class="bg-white dark:bg-slate-900 overflow-hidden shadow-sm sm:rounded-xl border border-slate-200/80 dark:border-slate-700">
-
         {{-- Header: title + search --}}
         <div class="px-4 sm:px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
             <div>
@@ -28,24 +27,6 @@
                         >
                     </div>
                 </div>
-
-                {{-- New Department filter --}}
-                <div class="w-full sm:w-48">
-                    <label class="sr-only" for="department-filter">Filter by department</label>
-                    <select
-                        id="department-filter"
-                        wire:model.defer="departmentId"
-                        class="form-select w-full text-sm"
-                    >
-                        <option value="">All departments</option>
-                        @foreach($departments as $dept)
-                            <option value="{{ $dept->id }}">
-                                {{ $dept->name ?: $dept->abbrev }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <div class="flex gap-2 justify-end">
                     <button
                         type="button"
@@ -55,10 +36,10 @@
                         <i class="bi bi-funnel me-1 text-[11px]"></i>
                         Filter
                     </button>
-                    @if($search !== '' || $departmentId)
+                    @if($search !== '')
                         <button
                             type="button"
-                            wire:click="clearFilters"
+                            wire:click="$set('search', '')"
                             class="inline-flex items-center px-3 py-1.5 rounded-md border border-slate-200 text-xs font-medium text-slate-700 hover:bg-slate-50"
                         >
                             Clear
@@ -68,53 +49,6 @@
             </div>
         </div>
 
-        {{-- Summary cards --}}
-        <div class="px-4 sm:px-6 py-4 bg-slate-50 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-700">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {{-- Total students --}}
-                <div class="bg-white dark:bg-slate-900 rounded-lg border border-slate-200/80 dark:border-slate-700 px-4 py-3">
-                    <p class="text-[11px] uppercase tracking-wide text-slate-500 dark:text-slate-400 font-semibold">
-                        Total Students
-                    </p>
-                    <p class="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        {{ number_format($totalStudents) }}
-                    </p>
-                </div>
-
-                {{-- Not yet verified (info_status = 0) --}}
-                <div class="bg-white dark:bg-slate-900 rounded-lg border border-slate-200/80 dark:border-slate-700 px-4 py-3">
-                    <p class="text-[11px] uppercase tracking-wide text-slate-500 dark:text-slate-400 font-semibold">
-                        Not Yet Verified
-                    </p>
-                    <p class="mt-1 text-xl font-semibold text-amber-700 dark:text-amber-400">
-                        {{ number_format($totalUnverified) }}
-                    </p>
-                </div>
-
-                {{-- No face-recognition photo --}}
-                <div class="bg-white dark:bg-slate-900 rounded-lg border border-slate-200/80 dark:border-slate-700 px-4 py-3">
-                    <p class="text-[11px] uppercase tracking-wide text-slate-500 dark:text-slate-400 font-semibold">
-                        No Face Image
-                    </p>
-                    <p class="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        {{ number_format($totalNoFace) }}
-                    </p>
-                </div>
-
-                {{-- Verified + has face image --}}
-                <div class="bg-white dark:bg-slate-900 rounded-lg border border-slate-200/80 dark:border-slate-700 px-4 py-3">
-                    <p class="text-[11px] uppercase tracking-wide text-slate-500 dark:text-slate-400 font-semibold">
-                        Verified &amp; With Face
-                    </p>
-                    <p class="mt-1 text-xl font-semibold text-emerald-700 dark:text-emerald-400">
-                        {{ number_format($totalVerifiedWithFace) }}
-                        <span class="text-xs font-normal text-slate-500 dark:text-slate-400">
-                            ({{ $verifiedWithFacePercentage }}%)
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
 
         {{-- Table --}}
         <div class="px-4 sm:px-6 py-4 overflow-x-auto">
@@ -126,9 +60,6 @@
                         </th>
                         <th class="px-3 py-2 text-left text-[11px] font-semibold tracking-wide text-slate-500 uppercase">
                             Student No.
-                        </th>
-                        <th class="px-3 py-2 text-left text-[11px] font-semibold tracking-wide text-slate-500 uppercase">
-                            Department
                         </th>
                         <th class="px-3 py-2 text-left text-[11px] font-semibold tracking-wide text-slate-500 uppercase">
                             Info Status
@@ -151,9 +82,6 @@
                             $hasNumber = !empty($student->student_number);
                             $infoOk    = (int)($student->info_status ?? 0) === 1;
                             $hasFace   = !empty($student->face_recognition_path);
-                            
-                            $deptLabel = $student->studentDepartment?->name
-                                ?: $student->studentDepartment?->abbrev;
                         @endphp
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/40">
                             <td class="px-3 py-2 align-middle">
@@ -169,10 +97,6 @@
 
                             <td class="px-3 py-2 align-middle text-slate-900 dark:text-slate-100">
                                 {{ $hasNumber ? $student->student_number : '—' }}
-                            </td>
-
-                            <td class="px-3 py-2 align-middle text-slate-900 dark:text-slate-100">
-                                {{ $deptLabel ?: '—' }}
                             </td>
 
                             <td class="px-3 py-2 align-middle">

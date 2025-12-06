@@ -25,8 +25,3 @@ require __DIR__.'/profile.php';
 require __DIR__.'/qr.php';
 require __DIR__.'/classroom.php';
 require __DIR__.'/events.php';
-
-// Catch-all fallback for unknown routes
-Route::fallback(function () {
-    return response()->view('errors.404', [], 404);
-});

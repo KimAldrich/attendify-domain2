@@ -1,12 +1,12 @@
 {{-- resources/views/admin/role-applications/index.blade.php --}}
 <x-app-layout>
-    <div class="px-6 pt-6">
-        <h2 class="text-2xl font-semibold tracking-tight">Role upgrade requests</h2>
-        <p class="text-sm text-gray-500">
-            Review pending upgrade requests and update user roles.
-        </p>
-    </div>
 <div class="px-4 md:px-6 py-4 space-y-4">
+    <h1 class="text-lg font-semibold text-slate-900 mb-1">
+        Role upgrade requests
+    </h1>
+    <p class="text-xs text-slate-500 mb-4">
+        Review pending upgrade requests and update user roles.
+    </p>
 
     @if (session('status'))
         <div class="mb-3 rounded-md border border-emerald-300 bg-emerald-50 text-emerald-900 px-3 py-2 text-xs">

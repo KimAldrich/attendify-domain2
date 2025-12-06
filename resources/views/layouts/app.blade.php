@@ -181,23 +181,6 @@
         .rl-nav:not(.expanded) .rl-item>a{ padding-right: var(--icon-offset); }
         .rl-nav:not(.expanded) .rl-footer { display: none; }
         
-        .custom-scroll {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(148,163,184,0.8) transparent; /* slate-400 */
-        }
-        .custom-scroll::-webkit-scrollbar {
-            width: 8px;
-        }
-        .custom-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scroll::-webkit-scrollbar-thumb {
-            background-color: rgba(148,163,184,0.8); /* slate-400 */
-            border-radius: 999px;
-        }
-        .custom-scroll:hover::-webkit-scrollbar-thumb {
-            background-color: rgba(100,116,139,0.95); /* slate-500 */
-        }
         @media (max-width: 1024px){
         .rl-nav{ inset: 0 auto 0 0; }
         .app-content{ margin-left: 0; }

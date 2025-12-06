@@ -10,7 +10,6 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\IdTokenLoginController;
 use App\Http\Controllers\Settings\AccountSecurityController;
-use App\Http\Controllers\NotificationsController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
@@ -44,15 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
 
     Route::get('/settings/security', [AccountSecurityController::class, 'index'])->name('settings.security');
-
-    Route::get('/notifications', [NotificationsController::class, 'index'])
-        ->name('notifications.index');
-
-    Route::post('/notifications/delete-read', [NotificationsController::class, 'deleteRead'])
-        ->name('notifications.delete-read');
-
-    Route::get('/notifications/{notification}/open', [NotificationsController::class, 'open'])
-        ->name('notifications.open');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });

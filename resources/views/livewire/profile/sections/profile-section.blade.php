@@ -1,7 +1,6 @@
 @php
     /** @var \App\Models\User $profile */
     $photoUrl = $profile->photo_url ?? asset('images/ui/userdefault.jpg');
-    $version  = optional($profile->updated_at)->timestamp;
 @endphp
 
 <div
@@ -14,8 +13,8 @@
         <div class="relative">
             <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-2 ring-slate-200 bg-slate-100">
                 <img
-                    src="{{ $photoUrl }}?v={{ $version }}"
-                    alt="{{ $profile->display_name }}"
+                    src="{{ $photoUrl }}"
+                    alt="Profile photo"
                     class="w-full h-full object-cover"
                     loading="lazy"
                 />
@@ -119,7 +118,7 @@
                     </button>
                 </div>
                 <img
-                    src="{{ $photoUrl }}?v={{ $version }}"
+                    src="{{ $photoUrl }}"
                     alt="Profile photo enlarged"
                     class="max-w-[88vw] max-h-[75vh] rounded-lg shadow-2xl object-contain bg-slate-900"
                 />

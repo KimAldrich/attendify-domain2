@@ -10,7 +10,6 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 use App\Notifications\BrandedVerifyEmail;
-use App\Models\Department;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmailContract
@@ -140,108 +139,5 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
         // Ultimate fallback: default avatar if something is misconfigured
         return asset('images/ui/userdefault.jpg');
-    }
-
-    public function getFaceRecognitionUrlAttribute(): ?string
-    {
-        // If no face_recognition_path, you can return null
-        // or a dedicated placeholder image.
-        if (!$this->face_recognition_path) {
-            return null; // or asset('images/ui/face-placeholder.jpg');
-        }
-
-        $diskConfig   = config('filesystems.disks.r2', []);
-        $baseUrl      = rtrim($diskConfig['url'] ?? env('R2_URL', ''), '/');
-        $relativePath = ltrim($this->face_recognition_path, '/'); // e.g. "face/slug/portrait.jpg"
-
-        if ($baseUrl !== '') {
-            return $baseUrl.'/'.$relativePath;
-        }
-
-        $endpoint = rtrim($diskConfig['endpoint'] ?? env('R2_ENDPOINT', ''), '/');
-        $bucket   = $diskConfig['bucket'] ?? env('R2_BUCKET', '');
-
-        if ($endpoint !== '' && $bucket !== '') {
-            return $endpoint.'/'.$bucket.'/'.$relativePath;
-        }
-
-        // If misconfigured, just return null or a default
-        return null;
-    }
-    public function getHasFaceRecognitionPhotoAttribute(): bool
-    {
-        return !empty($this->face_recognition_path);
-    }
-
-    public function taughtSections()
-    {
-        return $this->hasMany(\App\Models\CourseSection::class, 'instructor_id');
-    }
-
-    public function enrolledSections()
-    {
-        return $this->belongsToMany(
-            \App\Models\CourseSection::class,
-            'section_enrollments',
-            'student_id',
-            'course_section_id'
-        )->withTimestamps();
-    }
-
-    public function sectionEnrollments()
-    {
-        return $this->hasMany(\App\Models\SectionEnrollment::class, 'student_id');
-    }
-
-    // Quick helper for the student list column:
-    public function getHasActiveFaceProfileAttribute(): bool
-    {
-        $profile = $this->faceProfile;
-
-        return $profile?->is_active ?? false;
-    }
-
-    public function studentDepartment()
-    {
-        return $this->belongsTo(Department::class, 'student_department_id');
-    }
-
-    public function ownedEvents()
-    {
-        return $this->hasMany(Event::class, 'owner_id');
-    }
-
-    /*
-     * Event registrations for this user (as attendee).
-     */
-    public function eventRegistrations()
-    {
-        return $this->hasMany(EventRegistration::class, 'user_id');
-    }
-
-    /*
-     * Event-level roles (owner, co_organizer, staff).
-     */
-    public function eventRoles()
-    {
-        return $this->hasMany(EventUserRole::class, 'user_id');
-    }
-
-    /*
-     * Events where this user is a co-organizer.
-     */
-    public function coOrganizedEvents()
-    {
-        return $this->belongsToMany(Event::class, 'event_user_roles', 'user_id', 'event_id')
-                    ->wherePivot('role', 'co_organizer');
-    }
-
-    /*
-     * Events where this user is staff (for scanning, etc.).
-     */
-    public function staffedEvents()
-    {
-        return $this->belongsToMany(Event::class, 'event_user_roles', 'user_id', 'event_id')
-                    ->wherePivot('role', 'staff');
     }
 }

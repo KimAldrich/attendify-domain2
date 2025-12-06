@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Auth as FirebaseAuth;
 use App\Services\FirestoreRest;
-use Illuminate\Support\Facades\Gate;
-use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,5 +42,10 @@ class AppServiceProvider extends ServiceProvider
         // Firestore REST service
         $this->app->singleton(FirestoreRest::class, fn () => new FirestoreRest());
         $this->app->alias(FirestoreRest::class, 'firestore.http');
+    }
+
+    public function boot(): void
+    {
+        //
     }
 }

@@ -12,18 +12,16 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            // ── Events / schedules ─────────────────────────────────────────────
-            'view events',          // view event listings & details (for all roles)
-            'manage events',        // create/manage events (owners, event admins)
-            'co-organize events',   // eligible to be assigned as co-organizer for specific events
-            'staff events',         // eligible to be event staff (attendance scanning, limited metrics)
+            // events / schedules
+            'view events', //for all roles
+            'manage events', //for all roles except guests(yes, students with moderator status can also manage events), inside management
 
-            // ── Attendance (classroom + events integration) ───────────────────
-            'manage attendance',    // for faculty and admin (classroom mgmt)
-            'view attendance',      // for students and admin
-            'open scanner',         // existing permission (keep for backwards compatibility)
+            // attendance
+            'manage attendance', //for faculty and admin, inside management
+            'view attendance', //for students and admin
+            'open scanner', //for faculty and admin, inside management
 
-            // ── Admin (system-level) ───────────────────────────────────────────
+            // admin (only for admin)
             'manage users',
             'manage system',
             'review role applications',
@@ -32,13 +30,10 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
 
         foreach ($permissions as $p) {
-            Permission::firstOrCreate([
-                'name'       => $p,
-                'guard_name' => 'web',
-            ]);
+            Permission::firstOrCreate(['name' => $p, 'guard_name' => 'web']);
         }
 
-        // ── Roles ─────────────────────────────────────────────────────────────
+        // 2) Define roles
         $roles = [
             'guest',
             'student',
@@ -47,50 +42,28 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
 
         foreach ($roles as $r) {
-            Role::firstOrCreate([
-                'name'       => $r,
-                'guard_name' => 'web',
-            ]);
+            Role::firstOrCreate(['name' => $r, 'guard_name' => 'web']);
         }
 
-        // ── Map permissions to roles ──────────────────────────────────────────
-
-        // Guests (external accounts)
+        // 3) Map permissions to roles (adjust to your policy)
         Role::findByName('guest', 'web')->syncPermissions([
-            'view events',
+            'view events'
         ]);
 
-        // Students
-        // - Can view events (public & own).
-        // - Can view classroom attendance.
-        // - Can serve as event staff (scanner/metrics) via 'staff events'.
-        // - Co-organizer capability (co-organize events) will be given
-        //   individually to selected students, NOT to all.
         Role::findByName('student', 'web')->syncPermissions([
             'view events',
             'view attendance',
-            'staff events',
         ]);
 
-        // Faculty
-        // - Can create/manage events.
-        // - Can be co-organizers and staff for events.
-        // - Have full attendance + scanner capabilities.
         Role::findByName('faculty', 'web')->syncPermissions([
             'view events',
             'manage events',
-            'co-organize events',
-            'staff events',
-
-            'view attendance',
             'manage attendance',
             'open scanner',
         ]);
 
-        // Admin – full permissions
-        Role::findByName('admin', 'web')->syncPermissions($permissions);
+        Role::findByName('admin', 'web')->syncPermissions($permissions); 
 
-        // ── Ensure primary admin user has admin role ──────────────────────────
         $user = User::where('email', 'psurdattendify@gmail.com')->first();
         if ($user) {
             $user->syncRoles(['admin']);

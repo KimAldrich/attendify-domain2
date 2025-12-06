@@ -7,7 +7,6 @@ use App\Models\Campus;
 use App\Models\Department;
 use App\Models\Office;
 use App\Models\RoleUpgradeRequest;
-use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
@@ -23,9 +22,6 @@ class ProfilePage extends Component
     public bool $viewerIsOwner = false;
     public $photoUpload = null;
     public $faceRecognitionUpload = null;
-
-    public bool $reportStudentNumberModal = false;
-    public string $reportStudentNumberInput = '';
 
     public ?RoleUpgradeRequest $pendingRoleRequest = null;
 
@@ -434,57 +430,29 @@ private function detectHasPasswordProvider(?string $firebaseUid): bool
 
         $user = $this->profile->fresh();
 
-// Ensure the user has a slug (safety net)
-if (! $user->slug) {
-    $user->slug = Str::slug($this->makeDisplayName() ?: 'user-'.$user->id);
-    $user->save();
-    Log::info('[ProfilePage] Generated slug for user', [
-        'user_id' => $user->id,
-        'slug'    => $user->slug,
-    ]);
-}
+        // Ensure the user has a slug (safety net)
+        if (! $user->slug) {
+            $user->slug = Str::slug($this->makeDisplayName() ?: 'user-'.$user->id);
+            $user->save();
+            Log::info('[ProfilePage] Generated slug for user', [
+                'user_id' => $user->id,
+                'slug'    => $user->slug,
+            ]);
+        }
 
-// Decide extension (keep original if possible)
-$extension = $this->photoUpload->getClientOriginalExtension() ?: 'jpg';
+        // Decide extension (keep original if possible)
+        $extension = $this->photoUpload->getClientOriginalExtension() ?: 'jpg';
 
-$dir      = "profile/{$user->slug}";
-$filename = "avatar.{$extension}";
-$path     = "{$dir}/{$filename}";
+        $dir      = "profile/{$user->slug}";
+        $filename = "avatar.{$extension}";
+        $path     = "{$dir}/{$filename}";
 
-Log::info('[ProfilePage] Preparing to upload avatar to R2', [
-    'path'      => $path,
-    'disk'      => 'r2',
-    'hasOld'    => (bool) $user->photo_path,
-    'old_path'  => $user->photo_path,
-]);
-
-// Upload/replace in Cloudflare R2
-try {
-    Storage::disk('r2')->putFileAs(
-        $dir,
-        $this->photoUpload,
-        $filename
-    );
-
-    // Save path on user
-    $user->photo_path = $path;
-    $user->save();
-
-    Log::info('[ProfilePage] Successfully uploaded avatar to R2', [
-        'path' => $path,
-    ]);
-} catch (\Throwable $e) {
-    Log::error('[ProfilePage] Failed to upload avatar to R2', [
-        'path'  => $path,
-        'error' => $e->getMessage(),
-    ]);
-
-    $this->addError(
-        'photoUpload',
-        'Upload failed. Please check your connection or try a smaller image.'
-    );
-    return;
-}
+        Log::info('[ProfilePage] Preparing to upload avatar to R2', [
+            'path'      => $path,
+            'disk'      => 'r2',
+            'hasOld'    => (bool) $user->photo_path,
+            'old_path'  => $user->photo_path,
+        ]);
 
         // Optional: delete existing stored photo
         if ($user->photo_path) {
@@ -720,29 +688,13 @@ try {
             ['disk' => 'r2']
         );
 
-        $request = RoleUpgradeRequest::create([
+        RoleUpgradeRequest::create([
             'user_id'    => $user->id,
             'name'       => $name,
             'type'       => $this->roleApplicationType,
             'creds_path' => $path,
             'status'     => 'pending',
         ]);
-
-        $admin = User::role('admin')->first(); 
-
-        if ($admin) {
-            Notification::create([
-                'user_id' => $admin->id,
-                'title'   => 'New role upgrade request',
-                'message' => sprintf(
-                    '%s requested an upgrade to the "%s" role.',
-                    $name,
-                    ucfirst($this->roleApplicationType)
-                ),
-                'link'    => route('admin.role-applications.index'),
-                'status'  => 'unread',
-            ]);
-        }
 
         $this->dispatch('close-modal', name: 'role-application');
 
@@ -985,72 +937,5 @@ try {
         return view('profile.page');
     }
 
-    public function openStudentNumberReport(): void
-    {
-        $this->resetValidation();
-        $this->reportStudentNumberInput = '';
-        $this->reportStudentNumberModal = true;
-        
-        $this->dispatch('open-modal', name: 'student-number-report');
-    }
 
-    public function submitStudentNumberReport(): void
-    {
-        $userId = $this->profile->id ?? null;
-        if ($userId) {
-            $cooldownKey = 'student_number_report_cooldown_user_'.$userId;
-
-            if (Cache::has($cooldownKey)) {
-                $this->addError(
-                    'reportStudentNumberInput',
-                    'You recently submitted a report. Please wait a few minutes before sending another.'
-                );
-                return;
-            }
-        }
-
-        $this->validate([
-            'reportStudentNumberInput' => ['required', 'string', 'max:20'],
-        ]);
-
-        // validate format using your regex parser
-        $parsed = $this->parseStudentNumber($this->reportStudentNumberInput);
-        if (!$parsed) {
-            $this->addError('reportStudentNumberInput', 'Invalid student number format.');
-            return;
-        }
-
-        $sn = strtoupper(trim($this->reportStudentNumberInput));
-
-        // optional: check if number already exists in DB
-        $conflictUser = User::where('student_number', $sn)->first();
-
-        Notification::create([
-            'user_id' => $this->getAdminId(),
-            'title'   => 'Student Number Conflict Report',
-            'message' => "{$this->profile->display_name} reported a conflict for student number {$sn}.",
-            'link'    => route('admin.students.manage', ['search' => $sn]),
-            'meta'    => json_encode([
-                'student_number' => $sn,
-                'conflict_user_id' => $conflictUser?->id,
-            ]),
-            'status' => 'unread',
-        ]);
-
-        if ($userId) {
-            Cache::put($cooldownKey, true, now()->addMinutes(15));
-        }
-
-        $this->reportStudentNumberModal = false;
-        $this->dispatch('close-modal', name: 'student-number-report');
-
-        $this->reset('reportStudentNumberInput');
-
-        $this->dispatch('toast', type: 'success', message: 'Your report has been submitted.');
-    }
-
-    private function getAdminId(): int
-    {
-        return User::role('admin')->first()->id;
-    }
 }

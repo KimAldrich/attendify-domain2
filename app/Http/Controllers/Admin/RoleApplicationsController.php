@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\RoleUpgradeRequest;
 use App\Models\User;
-use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -107,18 +106,6 @@ class RoleApplicationsController extends Controller
                 $this->applyRoleChange($user, $role);
             });
 
-            Notification::create([
-                'user_id' => $user->id,
-                'title'   => 'Role Upgrade Approved',
-                'message' => sprintf(
-                    'Your request to become a %s has been approved.',
-                    ucfirst($role)
-                ),
-                // link user directly to their profile page or account settings
-                'link'    => route('profile.me'),
-                'status'  => 'unread',
-            ]);
-
             return back()->with('status', 'Request accepted and user role updated.');
         } catch (\Throwable $e) {
             Log::error('[RoleApplicationsController] approve failed', [
@@ -146,19 +133,6 @@ class RoleApplicationsController extends Controller
             'reviewed_by' => auth()->id(),
             'reviewed_at' => now(),
         ]);
-
-        if ($roleRequest->user) {
-            Notification::create([
-                'user_id' => $roleRequest->user->id,
-                'title'   => 'Role Upgrade Request Declined',
-                'message' => sprintf(
-                    'Your request to upgrade to %s was declined.',
-                    ucfirst($roleRequest->type)
-                ),
-                'link'    => route('profile.me'),
-                'status'  => 'unread',
-            ]);
-        }
 
         return back()->with('status', 'Request has been declined.');
     }
