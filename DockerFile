@@ -1,0 +1,50 @@
+# Use PHP 8.2 with Apache (easiest for Laravel)
+FROM php:8.2-apache
+
+# 1. Install system dependencies (libraries required by GD and gRPC)
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zlib1g-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    autoconf \
+    pkg-config \
+    unzip \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. Configure Apache DocumentRoot to point to Laravel's /public folder
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+
+# 3. Enable Apache mod_rewrite (required for Laravel routes)
+RUN a2enmod rewrite
+
+# 4. Install PHP Extensions
+# Install gRPC (takes ~5-10 mins to compile!)
+RUN pecl install grpc \
+    && docker-php-ext-enable grpc
+
+# Install GD (for QR codes) and Zip
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd zip pdo_mysql bcmath
+
+# 5. Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 6. Set working directory
+WORKDIR /var/www/html
+
+# 7. Copy project files
+COPY . .
+
+# 8. Run Composer Install
+RUN composer install --optimize-autoloader --no-scripts --no-interaction
+
+# 9. Set Permissions for Laravel
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# 10. Expose Port (Railway uses the PORT env var, Apache listens on 80 by default)
+EXPOSE 80
